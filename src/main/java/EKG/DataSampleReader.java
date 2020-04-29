@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface DataSampleReader {
     void save(PatientDTO patientDTO);
-    List<Double> loadData();
+    List<PatientDTO> loadData(Timestamp time);
 }

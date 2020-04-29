@@ -5,30 +5,18 @@ import java.sql.Timestamp;
 
 
 public class PatientDTO {
-    private double sample;
+
     private Timestamp time;
     private double temp;
     private double SpO2;
     private double BPM;
     private int id;
     private String patientId;
-    public PatientDTO(double sample, Timestamp time) {
-        this.sample = sample;
-        this.time = time;
-    }
+
 
     public PatientDTO() {
 
     }
-
-    public double getSample() {
-        return sample;
-    }
-
-    public void setSample(double sample) {
-        this.sample = sample;
-    }
-
     public Timestamp getTime() {
         return time;
     }

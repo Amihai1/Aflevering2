@@ -22,6 +22,11 @@ public class PatientDataGenerator implements DataObservable {
             if (DataSampler != null){
                 DataSampler.notify(patientDTO);
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }
