@@ -14,7 +14,7 @@ public class DataMain extends Application {
         launch(args);
     }
 
-
+    @Override
     public void start(Stage primaryStage) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/DataGUI.fxml"));
         try {

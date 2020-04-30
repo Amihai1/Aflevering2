@@ -47,7 +47,7 @@ public class DataSampleReaderSimImpl implements DataSampleReader{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return data;
     }
 
 
