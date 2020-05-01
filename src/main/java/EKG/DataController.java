@@ -33,7 +33,7 @@ public class DataController implements DataListener {
     @Override
     public void notify(PatientDTO data) {
         String text = DataOutput.getText();
-        text += "Time: " + data.getTime() + "Temperatur: " + data.getTemp() + "SpO2: " + data.getSpO2() + "BPM: " + data.getBPM() + "\r\n";
+        text += "Time: " + data.getTime() + ", Temperatur: " + data.getTemp() + ", SpO2: " + data.getSpO2() + ", BPM: " + data.getBPM() + "\r\n";
         DataOutput.setText(text);
         if (this.record) {
             data.setPatientId(DataField.getText());
