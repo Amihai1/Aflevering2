@@ -1,9 +1,5 @@
 package EKG;
 
-import EKG.DataSampleReader;
-import EKG.DataSampleReaderSimImpl;
-import EKG.MySQLConnector;
-import EKG.PatientDTO;
 import javafx.event.ActionEvent;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
