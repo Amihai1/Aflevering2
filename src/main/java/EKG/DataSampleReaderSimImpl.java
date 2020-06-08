@@ -1,12 +1,16 @@
 package EKG;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class DataSampleReaderSimImpl implements DataSampleReader{
-
+    //gemmer data i database
     @Override
     public void save(PatientDTO patientDTO) {
         Connection conn = MySQLConnector.getConn();
@@ -21,9 +25,8 @@ public class DataSampleReaderSimImpl implements DataSampleReader{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-
+    //Henter data fra database
     @Override
     public List<PatientDTO> loadData(Timestamp time) {
         List<PatientDTO> data = new ArrayList<>();
@@ -31,7 +34,7 @@ public class DataSampleReaderSimImpl implements DataSampleReader{
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM PatientData WHERE  time > ?");
             preparedStatement.setTimestamp(1,time);
-            ResultSet resultSet =preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 PatientDTO patientDTO = new PatientDTO();
                 patientDTO.setId(resultSet.getInt("idPatientData"));
@@ -41,11 +44,11 @@ public class DataSampleReaderSimImpl implements DataSampleReader{
                 patientDTO.setTime(resultSet.getTimestamp("time"));
                 data.add(patientDTO);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return data;
     }
-
 
 }

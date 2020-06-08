@@ -16,7 +16,7 @@ public class DataController implements DataListener {
     private boolean record;
     private DataSampleReader sampleReader = new DataSampleReaderSimImpl();
 
-
+    //knappen starter printningen af Data
     public void buttonPressed(ActionEvent actionEvent) {
         DataObservable DataStation = new PatientDataGenerator();
         new Thread(DataStation).start();
