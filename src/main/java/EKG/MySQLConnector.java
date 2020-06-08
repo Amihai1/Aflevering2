@@ -3,7 +3,7 @@ package EKG;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+//Skaber kontakt til MySQL
 public class MySQLConnector {
     private static Connection conn;
     public static Connection getConn(){
@@ -17,6 +17,5 @@ public class MySQLConnector {
         }
         return conn;
     }
-
 }
 

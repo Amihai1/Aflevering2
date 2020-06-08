@@ -12,7 +12,6 @@ public class LoadController {
     public DatePicker datePicker;
     public TextArea DataArea;
     public void loadData(ActionEvent actionEvent) {
-
             LocalDateTime localDateTime = datePicker.getValue().atStartOfDay();
             Timestamp time = Timestamp.valueOf(localDateTime);
             DataSampleReader dataSampleReader = new DataSampleReaderSimImpl();
