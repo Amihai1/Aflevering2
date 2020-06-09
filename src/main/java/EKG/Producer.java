@@ -7,7 +7,7 @@ public class Producer {
     int capacity = 20;
     SerialConnector serialConnector;
     // Function called by producer thread
-    public void produce() throws InterruptedException {
+    public void Produce() throws InterruptedException {
 
         while (true) {
             synchronized (this) {
