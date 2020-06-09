@@ -1,15 +1,11 @@
 package EKG;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
-public class DataSampleReaderSimImpl implements DataSampleReader{
+public class DAOSimImpl implements DAO {
     //gemmer data i database
     @Override
     public void save(PatientDTO patientDTO) {
@@ -26,6 +22,12 @@ public class DataSampleReaderSimImpl implements DataSampleReader{
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void batchsave(List<PatientDTO> batch) {
+
+    }
+
     //Henter data fra database
     @Override
     public List<PatientDTO> loadData(Timestamp time) {

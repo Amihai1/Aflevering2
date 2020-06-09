@@ -13,9 +13,10 @@ public class DataMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+//Her loader vi vores Gui.
     @Override
     public void start(Stage primaryStage) {
+        //og her tager vi så fat i klassen og dens resourcer
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/DataGUI.fxml"));
         try {
             FlowPane flowPane = fxmlLoader.load();

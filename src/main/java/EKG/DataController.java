@@ -14,7 +14,7 @@ public class DataController implements DataListener {
     public TextArea DataOutput;
     public TextField DataField;
     private boolean record;
-    private DataSampleReader sampleReader = new DataSampleReaderSimImpl();
+    private DAO sampleReader = new DAOSimImpl();
 
     //knappen starter printningen af Data
     public void buttonPressed(ActionEvent actionEvent) {

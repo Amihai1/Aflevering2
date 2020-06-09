@@ -11,6 +11,7 @@ public class PatientDataGenerator implements DataObservable {
         this.DataSampler = listener;
     }
 
+    //Hernede har vi en endeløs lykke, som generere data.
     @Override
     public void run() {
         while (true) {
@@ -19,6 +20,7 @@ public class PatientDataGenerator implements DataObservable {
             patientDTO.setBPM( Math.floor(Math.random() * 30) + 50);
             patientDTO.setSpO2(Math.floor(Math.random() * 2) + 98);
             patientDTO.setTemp( Math.floor((double) Math.random() * 2) + 36);
+            //hvis der så er ny data, så meddeler vi at der er kommet ny data.
             if (DataSampler != null){
                 DataSampler.notify(patientDTO);
             }

@@ -11,11 +11,12 @@ import java.util.List;
 public class LoadController {
     public DatePicker datePicker;
     public TextArea DataArea;
+    // knap med vores Load controller
     public void loadData(ActionEvent actionEvent) {
             LocalDateTime localDateTime = datePicker.getValue().atStartOfDay();
             Timestamp time = Timestamp.valueOf(localDateTime);
-            DataSampleReader dataSampleReader = new DataSampleReaderSimImpl();
-            List<PatientDTO> patientData = dataSampleReader.loadData(time);
+            DAO DAO = new DAOSimImpl();
+            List<PatientDTO> patientData = DAO.loadData(time);
             String text = " ";
             for (PatientDTO data: patientData) {
                 text +=  "idPatientData: " + data.getId()  + ", Temp: " + data.getTemp() + ", SpO2: " + data.getSpO2() + ", BPM: " + data.getBPM() + ", Time: " + data.getTime()+ "\r\n";
