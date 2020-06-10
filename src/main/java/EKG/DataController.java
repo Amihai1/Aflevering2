@@ -1,5 +1,8 @@
 package EKG;
 
+import DAOInterfaces.TempDAO;
+import DAOMySQLImpl.TempDAOMySQLImpl;
+import DTO.PatientDTO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,11 +17,14 @@ public class DataController implements DataListener {
     public TextArea DataOutput;
     public TextField DataField;
     private boolean record;
-    private DAO sampleReader = new DAOSimImpl();
+    private TempDAO sampleReader = new PatientDAO();
+    private TempDAO tempreader = new TempDAOMySQLImpl();
 
     //knappen starter printningen af Data
     public void buttonPressed(ActionEvent actionEvent) {
         DataObservable DataStation = new PatientDataGenerator();
+        DataObservable BPM = new BMPGenerator();
+        new Thread(BPM).start();
         new Thread(DataStation).start();
         DataStation.register(this);
     }
@@ -36,6 +42,7 @@ public class DataController implements DataListener {
         if (this.record) {
             data.setPatientId(DataField.getText());
             sampleReader.save(data);
+            tempreader.save(data);
         }
     }
 

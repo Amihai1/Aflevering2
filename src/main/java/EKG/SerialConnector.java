@@ -32,7 +32,7 @@ public class SerialConnector {
         }
     }
     public int[] getData() {//metoden oprettes
-        String[] rawValues = new String[100];//StringArray'et rawValues oprettes og længen bestemmes
+        String[] rawValues = new String[400];//StringArray'et rawValues oprettes og længen bestemmes
         int ir = 0;//initialisering af lokale variable
         int red = 0;
         while (ir == 0 || red == 0) {//løkke oprettes

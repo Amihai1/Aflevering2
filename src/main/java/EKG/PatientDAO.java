@@ -1,22 +1,24 @@
 package EKG;
 
+import DAOInterfaces.TempDAO;
+import DTO.PatientDTO;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class DAOSimImpl implements DAO {
+public class PatientDAO implements TempDAO {
     //gemmer data i database
     @Override
     public void save(PatientDTO patientDTO) {
         Connection conn = MySQLConnector.getConn();
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO PatientData(idPatientData,Temp, SpO2, BPM, time) VALUES (?,?,?,?,?)");
+            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO patient(idPatientData, SpO2, BPM, time) VALUES (?,?,?,?)");
             preparedStatement.setInt(1,patientDTO.getId());
-            preparedStatement.setDouble(2,patientDTO.getTemp());
-            preparedStatement.setDouble(3,patientDTO.getSpO2());
-            preparedStatement.setDouble(4,patientDTO.getBPM());
-            preparedStatement.setTimestamp(5,patientDTO.getTime());
+            preparedStatement.setDouble(2,patientDTO.getSpO2());
+            preparedStatement.setDouble(3,patientDTO.getBPM());
+            preparedStatement.setTimestamp(4,patientDTO.getTime());
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

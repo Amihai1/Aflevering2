@@ -1,5 +1,8 @@
 package EKG;
 
+import DAOInterfaces.TempDAO;
+import DAOMySQLImpl.TempDAOMySQLImpl;
+import DTO.PatientDTO;
 import javafx.event.ActionEvent;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -15,11 +18,13 @@ public class LoadController {
     public void loadData(ActionEvent actionEvent) {
             LocalDateTime localDateTime = datePicker.getValue().atStartOfDay();
             Timestamp time = Timestamp.valueOf(localDateTime);
-            DAO DAO = new DAOSimImpl();
-            List<PatientDTO> patientData = DAO.loadData(time);
+            TempDAO dao = new PatientDAO();
+            TempDAO tdao = new TempDAOMySQLImpl();
+            List<PatientDTO> patientData = dao.loadData(time);
+            //List<PatientDTO> patientTemp = tdao.loadData(time);
             String text = " ";
             for (PatientDTO data: patientData) {
-                text +=  "idPatientData: " + data.getId()  + ", Temp: " + data.getTemp() + ", SpO2: " + data.getSpO2() + ", BPM: " + data.getBPM() + ", Time: " + data.getTime()+ "\r\n";
+                text +=  "idPatientData: " + data.getId()  + ", Temp: " + data.getTemp() + ", SpO2: " + data.getSpO2() +"%" + ", BPM: " + data.getBPM() + ", Time: " + data.getTime()+ "\r\n";
             }
             DataArea.setText(text);
 

@@ -1,5 +1,7 @@
 package EKG;
 
+import DTO;
+
 import java.sql.Timestamp;
 
 public class PatientDataGenerator implements DataObservable {

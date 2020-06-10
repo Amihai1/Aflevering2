@@ -21,7 +21,7 @@ public class Producer {
 
                 // to insert the jobs in the list
                 list.add(value[0]);
-                list.add(value[1]);
+
 
                 // notifies the consumer thread that
                 // now it can start consuming

@@ -1,10 +1,10 @@
-import EKG.DAO;
-import EKG.PatientDTO;
+import DAOInterfaces.TempDAO;
+import DTO.PatientDTO;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-public class EKGDAO implements DAO {
+public class EKGDAO implements TempDAO {
 
     @Override
     public void save(PatientDTO patientDTO) {
