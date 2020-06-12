@@ -1,4 +1,4 @@
-package EKG;
+package Connectors;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

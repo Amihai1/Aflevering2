@@ -1,4 +1,4 @@
-package EKG;
+package Connectors;
 
 import jssc.SerialPort;
 import jssc.SerialPortList;

@@ -2,7 +2,6 @@ package Calculator;
 
 import DTO.TempDTO;
 import Listener.TempListener;
-import EKG.DataObservable;
 import Observable.TempObservable;
 
 import java.sql.Timestamp;

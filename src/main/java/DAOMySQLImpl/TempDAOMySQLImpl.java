@@ -2,7 +2,7 @@ package DAOMySQLImpl;
 
 import DAOInterfaces.TempDAO;
 import DTO.TempDTO;
-import EKG.MySQLConnector;
+import Connectors.MySQLConnector;
 
 import java.sql.*;
 import java.util.ArrayList;

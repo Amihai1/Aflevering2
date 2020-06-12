@@ -1,5 +1,7 @@
 package EKG;
 
+import Connectors.SerialConnector;
+
 import java.util.LinkedList;
 
 public class Producer {

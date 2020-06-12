@@ -1,4 +1,4 @@
-package EKG;
+package Controllers;
 
 import DAOInterfaces.TempDAO;
 import DAOMySQLImpl.TempDAOMySQLImpl;
