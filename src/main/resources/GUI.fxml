@@ -3,21 +3,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="850.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EKG.DataController">
+<AnchorPane prefHeight="850.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.DataController">
    <children>
-      <Button layoutX="52.0" layoutY="123.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="84.0" text="EKG" />
-      <Button layoutX="52.0" layoutY="500.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="84.0" text="Temperatur" />
-      <Button layoutX="52.0" layoutY="588.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="84.0" text="SpO2" />
-      <Pane layoutX="163.0" layoutY="32.0" prefHeight="231.0" prefWidth="789.0">
+      <Button layoutX="52.0" layoutY="158.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="84.0" text="EKG" />
+      <Button layoutX="52.0" layoutY="500.0" mnemonicParsing="false" onAction="#tempbutton" prefHeight="50.0" prefWidth="84.0" text="Temperatur" />
+      <Button layoutX="52.0" layoutY="588.0" mnemonicParsing="false" onAction="#spo2button" prefHeight="50.0" prefWidth="84.0" text="SpO2" />
+      <Pane layoutX="163.0" layoutY="67.0" prefHeight="231.0" prefWidth="789.0">
          <effect>
             <ColorInput height="231.28" paint="#cdc7c7" width="789.0" />
          </effect>
       </Pane>
       <Button layoutX="52.0" layoutY="413.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="84.0" text="BPM" />
-      <TextField layoutX="163.0" layoutY="413.0" prefHeight="50.0" prefWidth="149.0" />
-      <TextField layoutX="163.0" layoutY="500.0" prefHeight="50.0" prefWidth="149.0" />
-      <TextField layoutX="163.0" layoutY="588.0" prefHeight="50.0" prefWidth="149.0" />
-      <Button layoutX="52.0" layoutY="763.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="84.0" text="Vis Historik" />
+      <TextArea fx:id="BPMArea" layoutX="163.0" layoutY="413.0" prefHeight="50.0" prefWidth="149.0" />
+      <TextArea fx:id="temparea" layoutX="163.0" layoutY="500.0" prefHeight="50.0" prefWidth="149.0" wrapText="true">
+         <font><Font size="16.0" /></font><effect><Blend /></effect></TextArea>
+      <TextArea fx:id="spo2area" layoutX="163.0" layoutY="588.0" prefHeight="50.0" prefWidth="149.0">
+         <font>
+            <Font size="16.0" />
+         </font></TextArea>
+      <Button layoutX="52.0" layoutY="761.0" mnemonicParsing="false" onAction="#LoadData" prefHeight="50.0" prefWidth="84.0" text="Vis Historik" />
+      <TextField fx:id="patientid" layoutX="154.0" layoutY="14.0" prefHeight="25.0" prefWidth="84.0" text="1" />
+      <Text layoutX="50.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Indtast patientID :" />
    </children>
 </AnchorPane>

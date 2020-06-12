@@ -7,11 +7,11 @@ import Observable.TempObservable;
 import java.sql.Timestamp;
 
 public class TempCalculator implements TempObservable {
-    private TempListener dataListener;
+    private TempListener tempListener;
 
     @Override
     public void register(TempListener listener) {
-        this.dataListener = listener;
+        this.tempListener = listener;
     }
 
     @Override
@@ -19,9 +19,9 @@ public class TempCalculator implements TempObservable {
         while (true) {
             TempDTO tempDTO = new TempDTO();
             tempDTO.setTime(new Timestamp(System.currentTimeMillis()));
-            tempDTO.setTemp(Math.floor(Math.random()*2)+36);
-            if (dataListener != null){
-                dataListener.notify(tempDTO);
+            tempDTO.setTemp(Math.floor((Math.random()*2)+36));
+            if (tempListener != null){
+                tempListener.notify(tempDTO);
             }
             try {
                 Thread.sleep(1000);

@@ -15,7 +15,7 @@ public class SpO2DAOMySQLImpl implements SpO2DAO {
         try {
             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO spo2data (patientid,spo2,time) VALUES (?,?,?)");
             preparedStatement.setInt(1, spo2DTO.getPatientid());
-            preparedStatement.setString(2, spo2DTO.getSpo2());
+            preparedStatement.setDouble(2, spo2DTO.getSpo2());
             preparedStatement.setTimestamp(3, spo2DTO.getTime());
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -37,7 +37,7 @@ public class SpO2DAOMySQLImpl implements SpO2DAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 SpO2DTO spo2DTO = new SpO2DTO();
-                spo2DTO.setSpo2(resultSet.getString("spo2"));
+                spo2DTO.setSpo2(resultSet.getDouble("spo2"));
                 data.add(spo2DTO);
             }
 

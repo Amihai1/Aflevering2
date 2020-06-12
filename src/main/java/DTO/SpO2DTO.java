@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class SpO2DTO {
     private int patientid;
-    private String spo2;
+    private double spo2;
     private Timestamp time;
 
     public int getPatientid() {
@@ -15,11 +15,11 @@ public class SpO2DTO {
         this.patientid = patientid;
     }
 
-    public String getSpo2() {
+    public double getSpo2() {
         return spo2;
     }
 
-    public void setSpo2(String spo2) {
+    public void setSpo2(double spo2) {
         this.spo2 = spo2;
     }
 

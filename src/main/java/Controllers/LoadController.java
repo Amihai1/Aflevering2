@@ -24,7 +24,7 @@ public class LoadController {
             //List<PatientDTO> patientTemp = tdao.loadData(time);
             String text = " ";
             for (TempDTO data: patientData) {
-                text +=  "idPatientData: " + data.getId()  + ", Temp: " + data.getTemp() + ", SpO2: " + data.getSpO2() +"%" + ", BPM: " + data.getBPM() + ", Time: " + data.getTime()+ "\r\n";
+                //text +=  "idPatientData: " + data.getId()  + ", Temp: " + data.getTemp() + ", SpO2: " + data.getSpO2() +"%" + ", BPM: " + data.getBPM() + ", Time: " + data.getTime()+ "\r\n";
             }
             DataArea.setText(text);
 

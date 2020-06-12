@@ -20,7 +20,7 @@ public class SpO2Calculator implements SpO2Observable {
         while (true) {
             SpO2DTO spo2DTO = new SpO2DTO();
             spo2DTO.setTime(new Timestamp(System.currentTimeMillis()));
-            spo2DTO.setSpo2(String.valueOf(Math.floor(Math.random() * 2) + 98));
+            spo2DTO.setSpo2(Math.floor(Math.random() * 3) + 97);
             if (spo2Listener != null){
                 spo2Listener.notify(spo2DTO);
             }
