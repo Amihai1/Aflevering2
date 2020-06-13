@@ -19,7 +19,7 @@ public class DataMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         //og her tager vi så fat i klassen og dens resourcer
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/PatientGUI.fxml"));
         try {
             AnchorPane flowPane = fxmlLoader.load();
             primaryStage.setScene(new Scene(flowPane));

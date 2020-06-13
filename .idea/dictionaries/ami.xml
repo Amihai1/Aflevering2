@@ -1,3 +1,9 @@
 <component name="ProjectDictionaryState">
-  <dictionary name="ami" />
+  <dictionary name="ami">
+    <words>
+      <w>efternavn</w>
+      <w>fornavn</w>
+      <w>patientdata</w>
+    </words>
+  </dictionary>
 </component>

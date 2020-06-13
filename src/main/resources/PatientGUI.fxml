@@ -6,13 +6,13 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PatientController">
    <children>
-      <TextField fx:id="cprfelt" layoutX="204.0" layoutY="101.0" />
-      <TextField fx:id="fornavnfelt" layoutX="204.0" layoutY="169.0" />
-      <TextField fx:id="efternavnfelt" layoutX="204.0" layoutY="235.0" />
+      <TextField fx:id="cprField" layoutX="204.0" layoutY="101.0" />
+      <TextField fx:id="fField" layoutX="204.0" layoutY="169.0" />
+      <TextField fx:id="eField" layoutX="204.0" layoutY="235.0" />
       <Text layoutX="114.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPR-Nummer :" />
       <Text layoutX="142.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fornavn : " />
       <Text layoutX="134.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Efternavn : " />
-      <Button layoutX="237.0" layoutY="285.0" mnemonicParsing="false" onAction="#sogeknap" text="Søg Patient" />
-      <ListView layoutX="375.0" layoutY="98.0" prefHeight="162.0" prefWidth="182.0" />
+      <Button layoutX="237.0" layoutY="285.0" mnemonicParsing="false" onAction="#søgeknap" text="Søg Patient" />
+      <TextArea fx:id="DataArea" layoutX="361.0" layoutY="94.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
