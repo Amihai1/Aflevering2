@@ -8,16 +8,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -30,6 +26,7 @@ public class PatientController {
     private List<PatientDTO> patientdata;
 
     public void søgeknap(ActionEvent actionEvent) {
+
         String cpr = cprField.getText();
         String fornavn = fField.getText();
         String efternavn = eField.getText();
@@ -42,7 +39,7 @@ public class PatientController {
         listView.setItems(text);
     }
     public void guiknap(ActionEvent actionEvent){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/GUI.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/DataGUI.fxml"));
         try {
             AnchorPane anchorPane = fxmlLoader.load();
             Stage loadStage = new Stage();

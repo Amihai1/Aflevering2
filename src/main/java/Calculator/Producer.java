@@ -3,12 +3,14 @@ package Calculator;
 import Connectors.SerialConnector;
 import DTO.EKGDTO;
 import Listener.EKGListener;
-import Observable.EKGObservable;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class EKGGenerator implements EKGObservable {
+public class Producer {
+    /*
+    private EKGListener ekgListener;
+
     LinkedList<EKGDTO> list = new LinkedList<>();
     LinkedList<EKGDTO> listDatabase = new LinkedList<>();
     int capacity = 400;
@@ -26,9 +28,10 @@ public class EKGGenerator implements EKGObservable {
                     for(EKGDTO i: value){
                         list.add(i);
                         listDatabase.add(i);
-                        System.out.println("Producer produced-" + i);
+                        ;
                     }
                 }
+                System.out.println("Producer produced-" + value);
                 // notifies the consumer thread that
                 // now it can start consuming
                 notify();
@@ -60,25 +63,6 @@ public class EKGGenerator implements EKGObservable {
             }
         }
     }
-    private EKGListener ekgListener;
-    @Override
-    public void register(EKGListener listener) {
-        this.ekgListener = listener;
-    }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                Produce();
-               Consumer();
-               if(ekgListener!=null){
-                   ekgListener.notify();
-               }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+     */
 }
-

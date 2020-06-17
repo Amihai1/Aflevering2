@@ -1,10 +1,11 @@
 package DTO;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 
 public class EKGDTO {
     private int patientid;
-    private int ekg;
+    private double ekg;
     private Timestamp time;
 
     public int getPatientid() {
@@ -15,11 +16,11 @@ public class EKGDTO {
         this.patientid = patientid;
     }
 
-    public int getEkg() {
+    public double getEkg() {
         return ekg;
     }
 
-    public void setEkg(int ekg) {
+    public void setEkg(double ekg) {
         this.ekg = ekg;
     }
 

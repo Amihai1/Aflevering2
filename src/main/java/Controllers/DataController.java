@@ -1,9 +1,12 @@
 package Controllers;
 
+import Calculator.EKGGenerator;
 import Calculator.SpO2Calculator;
 import Calculator.TempCalculator;
+import DAOInterfaces.EKGDAO;
 import DAOInterfaces.SpO2DAO;
 import DAOInterfaces.TempDAO;
+import DAOMySQLImpl.EKGDAOMySQLImpl;
 import DAOMySQLImpl.SpO2DAOMySQLImpl;
 import DAOMySQLImpl.TempDAOMySQLImpl;
 import DTO.*;
@@ -11,6 +14,7 @@ import Listener.BPMListener;
 import Listener.EKGListener;
 import Listener.SpO2Listener;
 import Listener.TempListener;
+import Observable.EKGObservable;
 import Observable.SpO2Observable;
 import Observable.TempObservable;
 import javafx.event.ActionEvent;
@@ -20,9 +24,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class DataController implements BPMListener, EKGListener, SpO2Listener, TempListener {
@@ -30,9 +37,11 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     public TextArea temparea;
     public TextArea spo2area;
     public TextField patientid;
+    public Polyline Linje;
     private boolean record;
     private SpO2DAO spo2Reader = new SpO2DAOMySQLImpl();
     private TempDAO tempReader = new TempDAOMySQLImpl();
+    private EKGDAO ekgdao = new EKGDAOMySQLImpl();
 
     public void setpatientid(int id) {
         this.patientid.setText(String.valueOf(id));
@@ -43,13 +52,13 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
         TempObservable TempStation = new TempCalculator();
         new Thread(TempStation).start();
         TempStation.register(this);
-        this.record = !this.record;
+
     }
 
     public void TempRecord(ActionEvent actionEvent) {
         TempObservable TempStation = new TempCalculator();
         TempStation.register(this);
-
+        this.record = !this.record;
     }
 
     public void spo2button(ActionEvent actionEvent) {
@@ -63,6 +72,12 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
         SpO2Observable spo2 = new SpO2Calculator();
         spo2.register(this);
         this.record = !this.record;
+    }
+
+    public void ekgbutton(ActionEvent actionEvent) {
+        EKGObservable ekg = new EKGGenerator();
+        new Thread(ekg).start();
+        ekg.register(this);
     }
 
 
@@ -90,10 +105,7 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
         }
     }
 
-    @Override
-    public void notify(EKGDTO data) {
 
-    }
 
     @Override
     public void notify(SpO2DTO data) {
@@ -119,5 +131,19 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
 
 
     }
-}
+
+
+    @Override
+    public void notify(LinkedList<EKGDTO> data) {
+            List<Double> point = new LinkedList<>();
+            for (int i = 0; i < data.size(); i++) {
+                EKGDTO ekgdto = data.get(i);
+                point.add(Double.valueOf(i));
+                point.add(ekgdto.getEkg());
+            }
+            Linje.getPoints().addAll(point);
+            ekgdao.batchsave(data);
+        }
+    }
+
 

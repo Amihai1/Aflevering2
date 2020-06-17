@@ -1,7 +1,12 @@
 package Connectors;
 
+import DTO.EKGDTO;
 import jssc.SerialPort;
 import jssc.SerialPortList;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 public class SerialConnector {
     private SerialPort serialPort = null;
@@ -25,43 +30,35 @@ public class SerialConnector {
             serialPort.openPort();
             serialPort.setRTS(true);
             serialPort.setDTR(true);
-            serialPort.setParams(9600, 8, 1, SerialPort.PARITY_NONE);
+            serialPort.setParams(115200, 8, 1, SerialPort.PARITY_NONE);
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
         } catch (Exception exception) {
             exception.printStackTrace(); // Så kan vi se, hvad vi får af fejl
         }
     }
-    public int[] getData() {//metoden oprettes
-        String[] rawValues = new String[400];//StringArray'et rawValues oprettes og længen bestemmes
-        int ir = 0;//initialisering af lokale variable
-        int red = 0;
-        while (ir == 0 || red == 0) {//løkke oprettes
-            try {
-                if (serialPort.getInputBufferBytesCount() >= 12) {//kontrolstruktur
-                    result = serialPort.readString();//strengen aflæses og tildeles result
-                    Thread.sleep(20);//forsinkelse bestemmes til 20ms
-                    if (result != null && result.charAt(result.length() - 1) == '#') {//result kontroleres
-                        result = result.substring(0, result.length() - 1);//her fjernes det sidste index(#)
-                        rawValues = result.split(" ");//nu splittes strengen og gemmes i et array
+
+    public List<EKGDTO> getData() {//metoden oprettes
+        // String[] rawValues = new String[400];//StringArray'et rawValues oprettes og længen bestemmes
+        try {
+            if (serialPort.getInputBufferBytesCount() >= 12) {//kontrolstruktur
+                result = serialPort.readString();//strengen aflæses og tildeles result
+                String[] rawValues;
+                if (result != null && result.charAt(result.length() - 1) == ' ') {//result kontroleres
+                    result = result.substring(0, result.length() - 1);//her fjernes det sidste index(#)
+                    rawValues = result.split(" ");//nu splittes strengen og gemmes i et array
+                    List<EKGDTO> values = new LinkedList<>();
+                    for (int i = 0; i < rawValues.length; i++) {
+                            EKGDTO ekgdto = new EKGDTO();
+                            ekgdto.setEkg(Double.parseDouble(rawValues[i]));
+                            values.add(ekgdto);
                     }
-                    if (rawValues != null && rawValues.length >= 2) {//kontrollere om rawValues har nok indexer til konvertering
-                        try {
-                            ir = Integer.parseInt(rawValues[0]);//0. index konverteres til Integer og tildeles ir
-                        } catch (Exception e) {//hvis der er et problem tildeles ir værdien 0
-                            ir = 0;
-                        }
-                        try {
-                            red = Integer.parseInt(rawValues[1]);//1. index konverteres til Integer og tildeles red
-                        } catch (Exception e) {//hvis der er et problem tildeles red værdien 0
-                            red = 0;
-                        }
-                    }
+                    return values;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        int[] returnArray = new int[]{ir, red};//returnArray oprettes med ir som 0. index og red som 1. index
-        return returnArray;//returnArray returneres
+        return null;//returnArray returneres
     }
 }

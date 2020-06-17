@@ -1,6 +1,9 @@
 package Listener;
 
 import DTO.EKGDTO;
+
+import java.util.LinkedList;
+
 public interface EKGListener {
-    void notify(EKGDTO data);
+    void notify(LinkedList<EKGDTO> data);
 }
