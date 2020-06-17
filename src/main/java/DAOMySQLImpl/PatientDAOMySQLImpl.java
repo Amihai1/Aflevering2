@@ -16,8 +16,10 @@ public class PatientDAOMySQLImpl implements PatientDAO {
     public List<PatientDTO> search(String cpr, String fornavn, String efternavn) {
         List<PatientDTO> data = new ArrayList<>();
         Connection conn = MySQLConnector.getConn();
+        fornavn = "%"+fornavn+"%";
+        efternavn = "%"+efternavn+"%";
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM patient WHERE cpr = ? OR fornavn = ? OR efternavn = ?");
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT * FROM patient WHERE cpr = ? OR fornavn LIKE ? OR efternavn LIKE ?");
             preparedStatement.setString(1,cpr);
             preparedStatement.setString(2,fornavn);
             preparedStatement.setString(3,efternavn);

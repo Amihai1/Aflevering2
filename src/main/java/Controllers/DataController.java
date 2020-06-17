@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
@@ -33,6 +34,10 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     private SpO2DAO spo2Reader = new SpO2DAOMySQLImpl();
     private TempDAO tempReader = new TempDAOMySQLImpl();
 
+    public void setpatientid(int id) {
+        this.patientid.setText(String.valueOf(id));
+    }
+
     //knappen starter printningen af Data
     public void tempbutton(ActionEvent actionEvent) {
         TempObservable TempStation = new TempCalculator();
@@ -40,15 +45,24 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
         TempStation.register(this);
         this.record = !this.record;
     }
-    public void spo2button(ActionEvent actionEvent){
+
+    public void TempRecord(ActionEvent actionEvent) {
+        TempObservable TempStation = new TempCalculator();
+        TempStation.register(this);
+
+    }
+
+    public void spo2button(ActionEvent actionEvent) {
         SpO2Observable spo2 = new SpO2Calculator();
         new Thread(spo2).start();
         spo2.register(this);
-        this.record = !this.record;
+
     }
 
-    public void DataRecord(ActionEvent actionEvent) {
-
+    public void SpO2Record(ActionEvent actionEvent) {
+        SpO2Observable spo2 = new SpO2Calculator();
+        spo2.register(this);
+        this.record = !this.record;
     }
 
 
@@ -72,6 +86,7 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
         BPMArea.setText(text);
         if (this.record) {
             data.setPatientid(Integer.parseInt(String.valueOf(BPMArea.getText())));
+
         }
     }
 
@@ -83,23 +98,26 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     @Override
     public void notify(SpO2DTO data) {
         String text = spo2area.getText();
-        text = " " + data.getSpo2()+ "%";
+        text = " " + data.getSpo2() + "%";
         spo2area.setText(text);
         if (this.record) {
             data.setPatientid(Integer.parseInt(patientid.getText()));
             spo2Reader.save(data);
         }
     }
+
     @Override
-    public void notify(TempDTO data) {
+    public void notify(TempDTO temp) {
         String text = temparea.getText();
-        text = " " + data.getTemp() + "\u00B0"+"C";
+        text = " " + temp.getTemp() + "\u00B0" + "C";
         temparea.setText(text);
         if (this.record) {
-            data.setPatientid(Integer.parseInt(patientid.getText()));
-            tempReader.save(data);
+            temp.setPatientid(Integer.parseInt(patientid.getText()));
+            System.out.println(temp.getPatientid());
+            tempReader.save(temp);
         }
 
 
     }
 }
+
