@@ -1,6 +1,7 @@
 package Controllers;
 
 import Calculator.EKGGenerator;
+import Calculator.Producer;
 import Calculator.SpO2Calculator;
 import Calculator.TempCalculator;
 import DAOInterfaces.EKGDAO;
@@ -40,6 +41,7 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     public TextField patientid;
     public Polyline Linje;
     private boolean record;
+    private double possition = 0.0;
     private SpO2DAO spo2Reader = new SpO2DAOMySQLImpl();
     private TempDAO tempReader = new TempDAOMySQLImpl();
     private EKGDAO ekgdao = new EKGDAOMySQLImpl();
@@ -76,9 +78,10 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     }
 
     public void ekgbutton(ActionEvent actionEvent) {
-        EKGObservable ekg = new EKGGenerator();
+        EKGGenerator ekg = new EKGGenerator();
         new Thread(ekg).start();
         ekg.register(this);
+        this.record = !this.record;
     }
 
 
@@ -105,7 +108,6 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
 
         }
     }
-
 
 
     @Override
@@ -136,15 +138,26 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
 
     @Override
     public void notify(LinkedList<EKGDTO> data) {
-            List<Double> point = new LinkedList<>();
-            for (int i = 0; i < data.size(); i++) {
-                EKGDTO ekgdto = data.get(i);
-                point.add(Double.valueOf(i));
-                point.add(ekgdto.getEkg());
-            }
-            Linje.getPoints().addAll(point);
+        List<Double> point = new LinkedList<>();
+
+        for (int i = 0; i < data.size(); i++) {
+            EKGDTO ekgdto = data.get(i);
+            point.add((double) i);
+            point.add((double) ekgdto.getEkg());
+
+
+
+
+
+        }
+
+        Linje.getPoints().addAll(point);
+
+
+        if (this.record) {
             ekgdao.batchsave(data);
         }
     }
+}
 
 

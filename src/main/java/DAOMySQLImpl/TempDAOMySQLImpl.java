@@ -1,6 +1,7 @@
 package DAOMySQLImpl;
 
 import DAOInterfaces.TempDAO;
+import DTO.PatientDTO;
 import DTO.TempDTO;
 import Connectors.MySQLConnector;
 
@@ -36,10 +37,13 @@ public class TempDAOMySQLImpl implements TempDAO {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM tempdata WHERE  time > ?");
             preparedStatement.setTimestamp(1, time);
+
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 TempDTO tempDTO = new TempDTO();
                 tempDTO.setTemp(resultSet.getDouble("Temp"));
+                tempDTO.setPatientid(resultSet.getInt("patientid"));
+                tempDTO.setTime(resultSet.getTimestamp("time"));
                 data.add(tempDTO);
             }
 

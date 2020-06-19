@@ -5,8 +5,10 @@ import java.util.LinkedList;
 
 public class EKGDTO {
     private int patientid;
-    private double ekg;
+    private int ekg;
     private Timestamp time;
+
+
 
     public int getPatientid() {
         return patientid;
@@ -16,11 +18,11 @@ public class EKGDTO {
         this.patientid = patientid;
     }
 
-    public double getEkg() {
+    public int getEkg() {
         return ekg;
     }
 
-    public void setEkg(double ekg) {
+    public void setEkg(int ekg) {
         this.ekg = ekg;
     }
 

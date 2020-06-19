@@ -2,6 +2,7 @@ package Connectors;
 
 import DTO.EKGDTO;
 import jssc.SerialPort;
+import jssc.SerialPortException;
 import jssc.SerialPortList;
 
 import java.util.LinkedList;
@@ -48,15 +49,20 @@ public class SerialConnector {
                     rawValues = result.split(" ");//nu splittes strengen og gemmes i et array
                     List<EKGDTO> values = new LinkedList<>();
                     for (int i = 0; i < rawValues.length; i++) {
+                        if (!Objects.equals(rawValues[i], "")) {
                             EKGDTO ekgdto = new EKGDTO();
-                            ekgdto.setEkg(Double.parseDouble(rawValues[i]));
+                            ekgdto.setEkg(Integer.parseInt(rawValues[i]));
                             values.add(ekgdto);
+
+                        }
                     }
                     return values;
                 }
             }
 
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        } catch (SerialPortException e) {
             e.printStackTrace();
         }
         return null;//returnArray returneres

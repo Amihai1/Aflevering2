@@ -16,7 +16,7 @@
       <DatePicker fx:id="datepickerTemp" layoutX="313.0" layoutY="480.0" prefHeight="25.0" prefWidth="125.0" />
       <DatePicker layoutX="538.0" layoutY="480.0" prefHeight="25.0" prefWidth="125.0" />
       <DatePicker layoutX="14.0" layoutY="41.0" />
-      <Button layoutX="113.0" layoutY="84.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="76.0" text="Load EKG" />
+      <Button layoutX="113.0" layoutY="84.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="76.0" text="Load Main" />
       <TextArea layoutX="689.0" layoutY="517.0" prefHeight="283.0" prefWidth="297.0" />
       <Button layoutX="689.0" layoutY="480.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Load Alt" />
       <DatePicker layoutX="763.0" layoutY="480.0" />
@@ -25,5 +25,6 @@
             <ColorInput height="198.66" paint="#d0d0d0" width="750" />
          </effect>
       </Pane>
+      <TextField fx:id="patientid" layoutX="896.0" layoutY="14.0" prefHeight="25.0" prefWidth="41.0" />
    </children>
 </AnchorPane>

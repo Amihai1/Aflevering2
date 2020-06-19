@@ -13,7 +13,7 @@
       <Text layoutX="48.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fornavn :" />
       <Text layoutX="40.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Efternavn :" />
       <Button layoutX="154.0" layoutY="273.0" mnemonicParsing="false" onAction="#søgeknap" text="Søg Patient" />
-      <Button layoutX="620.0" layoutY="273.0" mnemonicParsing="false" onAction="#guiknap" text="Vælg bruger" />
+      <Button layoutX="620.0" layoutY="273.0" mnemonicParsing="false" onAction="#guiknap" text="Vælg Patient" />
       <ListView fx:id="listView" layoutX="287.0" layoutY="100.0" prefHeight="153.0" prefWidth="416.0" />
    </children>
 </AnchorPane>

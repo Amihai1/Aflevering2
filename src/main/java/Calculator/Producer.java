@@ -3,18 +3,18 @@ package Calculator;
 import Connectors.SerialConnector;
 import DTO.EKGDTO;
 import Listener.EKGListener;
+import Observable.EKGObservable;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class Producer {
-    /*
-    private EKGListener ekgListener;
-
+public class Producer implements EKGObservable {
     LinkedList<EKGDTO> list = new LinkedList<>();
     LinkedList<EKGDTO> listDatabase = new LinkedList<>();
     int capacity = 400;
     SerialConnector serialConnector = new SerialConnector(0);
+    private EKGListener listener;
+
     // Function called by producer thread
     public void Produce() throws InterruptedException {
         while (true) {
@@ -28,41 +28,43 @@ public class Producer {
                     for(EKGDTO i: value){
                         list.add(i);
                         listDatabase.add(i);
-                        ;
+                        System.out.println("Producer produced:" + i.getEkg());
                     }
                 }
-                System.out.println("Producer produced-" + value);
+
                 // notifies the consumer thread that
                 // now it can start consuming
                 notify();
 
                 // makes the working of program easier
                 // to  understand
-                Thread.sleep(10);
+
             }
         }
     }
     public void Consumer() throws InterruptedException {
         while(true){
-
+            LinkedList<EKGDTO> listConsumer;
             synchronized (this){
-                while (list.size() == 0)
+                while (list.size() < 20)
                     wait();
-
-                // to retrive the ifrst job in the list
-                LinkedList<Integer> removeObjekt = new LinkedList<>();
-                list.removeAll(removeObjekt);
-
-                System.out.println("Consumer consumed-");
-
+                listConsumer = list;
+                list = new LinkedList<>();
                 // Wake up producer thread
                 notify();
 
                 // and sleep
-                Thread.sleep(100);
+
             }
+            if(listener!=null){
+                listener.notify(listConsumer);
+            }
+
         }
     }
 
-     */
+    @Override
+    public void register(EKGListener listener) {
+        this.listener = listener;
+    }
 }

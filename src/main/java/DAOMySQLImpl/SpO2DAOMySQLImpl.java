@@ -32,7 +32,7 @@ public class SpO2DAOMySQLImpl implements SpO2DAO {
         List<SpO2DTO> data = new ArrayList<>();
         Connection connection = MySQLConnector.getConn();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM spo2data WHERE  time > ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM spo2data WHERE  time > ? AND patientid=?");
             preparedStatement.setTimestamp(1, time);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
