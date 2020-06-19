@@ -21,7 +21,6 @@ public class PatientController {
     public TextField cprField;
     public TextField fField;
     public TextField eField;
-    public TextField patientField;
     public ListView<String> listView;
     private List<PatientDTO> patientdata;
 

@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
@@ -82,11 +83,11 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
 
 
     public void LoadData(ActionEvent actionEvent) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/LoadGui.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/HistorikGUI.fxml"));
         try {
-            FlowPane flowPane = fxmlLoader.load();
+            AnchorPane anchorPane = fxmlLoader.load();
             Stage loadStage = new Stage();
-            loadStage.setScene((new Scene(flowPane)));
+            loadStage.setScene((new Scene(anchorPane)));
             loadStage.show();
         } catch (IOException e) {
             e.printStackTrace();

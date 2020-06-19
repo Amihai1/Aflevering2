@@ -4,16 +4,16 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="850.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoadController">
+<AnchorPane prefHeight="850.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HistorikController">
    <children>
-      <TextArea layoutX="14.0" layoutY="516.0" prefHeight="283.0" prefWidth="200.0" />
-      <Button layoutX="14.0" layoutY="480.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Load BMP" />
-      <TextArea layoutX="237.0" layoutY="517.0" prefHeight="283.0" prefWidth="200.0" />
-      <Button layoutX="237.0" layoutY="480.0" mnemonicParsing="false" text="Load Temp" />
+      <TextArea fx:id="bpmArea" layoutX="14.0" layoutY="516.0" prefHeight="283.0" prefWidth="200.0" />
+      <Button layoutX="14.0" layoutY="480.0" mnemonicParsing="false" onAction="#BPMload" prefHeight="25.0" prefWidth="74.0" text="Load BMP" />
+      <TextArea fx:id="tempArea" layoutX="237.0" layoutY="517.0" prefHeight="283.0" prefWidth="200.0" />
+      <Button layoutX="237.0" layoutY="480.0" mnemonicParsing="false" onAction="#tempload" text="Load Temp" />
       <TextArea layoutX="463.0" layoutY="517.0" prefHeight="283.0" prefWidth="200.0" />
       <Button layoutX="463.0" layoutY="480.0" mnemonicParsing="false" text="Load SpO2" />
-      <DatePicker layoutX="88.0" layoutY="480.0" prefHeight="25.0" prefWidth="125.0" />
-      <DatePicker layoutX="313.0" layoutY="480.0" prefHeight="25.0" prefWidth="125.0" />
+      <DatePicker fx:id="datepickerBPM" layoutX="88.0" layoutY="480.0" prefHeight="25.0" prefWidth="125.0" />
+      <DatePicker fx:id="datepickerTemp" layoutX="313.0" layoutY="480.0" prefHeight="25.0" prefWidth="125.0" />
       <DatePicker layoutX="538.0" layoutY="480.0" prefHeight="25.0" prefWidth="125.0" />
       <DatePicker layoutX="14.0" layoutY="41.0" />
       <Button layoutX="113.0" layoutY="84.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="76.0" text="Load EKG" />
