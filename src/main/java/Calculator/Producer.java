@@ -21,14 +21,13 @@ public class Producer implements EKGObservable {
             synchronized (this) {
                 // producer thread waits while list
                 // is full
-                while (list.size() == capacity && listDatabase.size() == capacity)
+                while (list.size() == capacity)
                     wait();
                 List<EKGDTO> value = serialConnector.getData();
                 if(value!=null){
                     for(EKGDTO i: value){
                         list.add(i);
-                        listDatabase.add(i);
-                        System.out.println("Producer produced:" + i.getEkg());
+                        //listDatabase.add(i);
                     }
                 }
 
@@ -38,33 +37,59 @@ public class Producer implements EKGObservable {
 
                 // makes the working of program easier
                 // to  understand
-
             }
         }
     }
     public void Consumer() throws InterruptedException {
         while(true){
             LinkedList<EKGDTO> listConsumer;
-            synchronized (this){
-                while (list.size() < 20)
+            synchronized (this) {
+                while (list.size() < 50)
                     wait();
                 listConsumer = list;
-                list = new LinkedList<>();
+                list = new LinkedList<EKGDTO>();
                 // Wake up producer thread
-                notify();
 
                 // and sleep
 
-            }
-            if(listener!=null){
-                listener.notify(listConsumer);
-            }
+                if (listener != null) {
+                    listener.notify(listConsumer);
+                }
+                notify();
 
+            }
         }
     }
+    @Override
+    public void run() {
+        Thread pro = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Produce();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Thread con = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Consumer();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
+        pro.start();
+        con.start();
+    }
     @Override
     public void register(EKGListener listener) {
         this.listener = listener;
     }
+
+
 }

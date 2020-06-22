@@ -5,6 +5,8 @@ import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -51,18 +53,17 @@ public class SerialConnector {
                     for (int i = 0; i < rawValues.length; i++) {
                         if (!Objects.equals(rawValues[i], "")) {
                             EKGDTO ekgdto = new EKGDTO();
-                            ekgdto.setEkg(Integer.parseInt(rawValues[i]));
+                            ekgdto.setEkg((Integer.parseInt(rawValues[i])));
+                            ekgdto.setTime(new Timestamp(System.currentTimeMillis()));
                             values.add(ekgdto);
-
                         }
+
                     }
                     return values;
                 }
             }
 
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        } catch (SerialPortException e) {
+        } catch (NumberFormatException | SerialPortException e) {
             e.printStackTrace();
         }
         return null;//returnArray returneres

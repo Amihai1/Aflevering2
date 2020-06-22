@@ -18,6 +18,7 @@ import Listener.TempListener;
 import Observable.EKGObservable;
 import Observable.SpO2Observable;
 import Observable.TempObservable;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,6 +31,8 @@ import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,10 +44,11 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     public TextField patientid;
     public Polyline Linje;
     private boolean record;
-    private double possition = 0.0;
+    private double x = 0.0;
     private SpO2DAO spo2Reader = new SpO2DAOMySQLImpl();
     private TempDAO tempReader = new TempDAOMySQLImpl();
     private EKGDAO ekgdao = new EKGDAOMySQLImpl();
+    private EKGDTO ekgdto;
 
     public void setpatientid(int id) {
         this.patientid.setText(String.valueOf(id));
@@ -78,9 +82,13 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     }
 
     public void ekgbutton(ActionEvent actionEvent) {
-        EKGGenerator ekg = new EKGGenerator();
+
+        EKGObservable ekg = new Producer();
         new Thread(ekg).start();
         ekg.register(this);
+
+    }
+    public void ekgRecord(ActionEvent actionEvent) {
         this.record = !this.record;
     }
 
@@ -92,6 +100,9 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
             Stage loadStage = new Stage();
             loadStage.setScene((new Scene(anchorPane)));
             loadStage.show();
+            HistorikController hcontroller = fxmlLoader.<HistorikController>getController();
+            String patientDTO = patientid.getText();
+            hcontroller.setpatientid(Integer.parseInt(patientDTO));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -131,32 +142,29 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
             System.out.println(temp.getPatientid());
             tempReader.save(temp);
         }
-
-
     }
-
-
     @Override
     public void notify(LinkedList<EKGDTO> data) {
+        Platform.runLater(() -> {
         List<Double> point = new LinkedList<>();
 
-        for (int i = 0; i < data.size(); i++) {
-            EKGDTO ekgdto = data.get(i);
-            point.add((double) i);
-            point.add((double) ekgdto.getEkg());
+        for (EKGDTO ekgdto : data) {
+            point.add(x);
+            point.add((double) ekgdto.getEkg()/3);
+            x++;
 
-
-
-
+            ekgdto.setPatientid(Integer.parseInt(patientid.getText()));
 
         }
-
+        if (x>1000){
+            x=0;
+            Linje.getPoints().clear();
+        }
         Linje.getPoints().addAll(point);
+        if (this.record = !this.record){
 
-
-        if (this.record) {
             ekgdao.batchsave(data);
-        }
+        }});
     }
 }
 

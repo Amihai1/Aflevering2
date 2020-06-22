@@ -8,7 +8,7 @@ import java.util.List;
 public interface TempDAO {
     void save(TempDTO tempDTO);
     void batchsave(List<TempDTO> batch);
-    List<TempDTO> loadData(Timestamp time);
+    List<TempDTO> loadData(Timestamp time, int patientid);
 
 
 }

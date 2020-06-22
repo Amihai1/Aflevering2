@@ -9,25 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EKGDAOMySQLImpl implements EKGDAO {
-    @Override
-    public void save(EKGDTO ekgDTO) {
 
-    }
+
     @Override
     public void batchsave(List<EKGDTO> batch) {
         Connection conn = MySQLConnector.getConn();
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO ekgdata (patientid,ekg,time) VALUES (?,?,?)");
-            for (EKGDTO ekgdto: batch) {
+            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO ekgdata1 (patientid,ekg,time) VALUES (?,?,?)");
+            for (EKGDTO ekgdto : batch) {
                 preparedStatement.setInt(1, ekgdto.getPatientid());
-                preparedStatement.setDouble(2, ekgdto.getEkg());
+                preparedStatement.setInt(2, ekgdto.getEkg());
                 preparedStatement.setTimestamp(3, ekgdto.getTime());
                 preparedStatement.addBatch();
+
             }
             preparedStatement.executeBatch();
-        } catch (SQLException e) {
+        } catch (
+                SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override

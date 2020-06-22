@@ -31,13 +31,13 @@ public class TempDAOMySQLImpl implements TempDAO {
     }
 
     @Override
-    public List<TempDTO> loadData(Timestamp time) {
+    public List<TempDTO> loadData(Timestamp time, int patientid) {
         List<TempDTO> data = new ArrayList<>();
         Connection connection = MySQLConnector.getConn();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM tempdata WHERE  time > ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM tempdata WHERE  time > ? AND patientid =?");
             preparedStatement.setTimestamp(1, time);
-
+            preparedStatement.setInt(2, patientid);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 TempDTO tempDTO = new TempDTO();

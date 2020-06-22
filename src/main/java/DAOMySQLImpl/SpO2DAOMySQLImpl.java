@@ -28,12 +28,13 @@ public class SpO2DAOMySQLImpl implements SpO2DAO {
     }
 
     @Override
-    public List<SpO2DTO> loadData(Timestamp time) {
+    public List<SpO2DTO> loadData(Timestamp time,int patientid) {
         List<SpO2DTO> data = new ArrayList<>();
         Connection connection = MySQLConnector.getConn();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM spo2data WHERE  time > ? AND patientid=?");
             preparedStatement.setTimestamp(1, time);
+            preparedStatement.setInt(2, patientid);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 SpO2DTO spo2DTO = new SpO2DTO();
