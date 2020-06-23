@@ -49,6 +49,7 @@ import java.util.List;
 
         public void spo2load(ActionEvent actionEvent) {
             SpO2DTO spO2DTO = new SpO2DTO();
+            spO2DTO.setPatientid(Integer.parseInt(patientid.getText()));
             LocalDateTime localDateTime = datepickerSpO2.getValue().atStartOfDay();
             Timestamp time = Timestamp.valueOf(localDateTime);
             SpO2DAO spo2dao = new SpO2DAOMySQLImpl();

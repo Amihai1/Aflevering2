@@ -19,17 +19,39 @@ public class EKGGenerator implements EKGObservable, Runnable {
         producer.register(listener);
     }
 
-
+    Thread pro = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                producer.Produce();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    });
+    Thread con = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                producer.Consumer();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    });
 
 
     @Override
     public void run() {
 
 
+        pro.start();
+        con.start();
 
 
     }
-
-
 }
+
+
+
 

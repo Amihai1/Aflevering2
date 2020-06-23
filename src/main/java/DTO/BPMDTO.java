@@ -1,13 +1,10 @@
 package DTO;
 
-import DAOInterfaces.BPMDAO;
-
 import java.sql.Timestamp;
-import java.util.List;
 
 public class BPMDTO {
    private int patientid;
-   private int bpm;
+   private double bpm;
    private Timestamp time;
 
     public int getPatientid() {
@@ -18,11 +15,11 @@ public class BPMDTO {
         this.patientid = patientid;
     }
 
-    public int getBpm() {
+    public double getBpm() {
         return bpm;
     }
 
-    public void setBpm(int bpm) {
+    public void setBpm(double bpm) {
         this.bpm = bpm;
     }
 

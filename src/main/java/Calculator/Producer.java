@@ -11,7 +11,7 @@ import java.util.List;
 public class Producer implements EKGObservable {
     LinkedList<EKGDTO> list = new LinkedList<>();
     LinkedList<EKGDTO> listDatabase = new LinkedList<>();
-    int capacity = 400;
+    int capacity = 200;
     SerialConnector serialConnector = new SerialConnector(0);
     private EKGListener listener;
 
@@ -28,6 +28,7 @@ public class Producer implements EKGObservable {
                     for(EKGDTO i: value){
                         list.add(i);
                         //listDatabase.add(i);
+                        //System.out.println(i.getEkg());
                     }
                 }
 
@@ -49,43 +50,15 @@ public class Producer implements EKGObservable {
                 listConsumer = list;
                 list = new LinkedList<EKGDTO>();
                 // Wake up producer thread
-
                 // and sleep
-
                 if (listener != null) {
                     listener.notify(listConsumer);
                 }
                 notify();
-
             }
         }
     }
-    @Override
-    public void run() {
-        Thread pro = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Produce();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        Thread con = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Consumer();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
-        pro.start();
-        con.start();
-    }
     @Override
     public void register(EKGListener listener) {
         this.listener = listener;

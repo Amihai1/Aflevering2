@@ -1,5 +1,6 @@
 package Connectors;
 
+import DTO.BPMDTO;
 import DTO.EKGDTO;
 import jssc.SerialPort;
 import jssc.SerialPortException;
@@ -41,13 +42,12 @@ public class SerialConnector {
     }
 
     public List<EKGDTO> getData() {//metoden oprettes
-        // String[] rawValues = new String[400];//StringArray'et rawValues oprettes og længen bestemmes
         try {
-            if (serialPort.getInputBufferBytesCount() >= 12) {//kontrolstruktur
+            if (serialPort.getInputBufferBytesCount() >= 8) {//kontrolstruktur
                 result = serialPort.readString();//strengen aflæses og tildeles result
                 String[] rawValues;
                 if (result != null && result.charAt(result.length() - 1) == ' ') {//result kontroleres
-                    result = result.substring(0, result.length() - 1);//her fjernes det sidste index(#)
+                    //result = result.substring(0, result.length() - 1);//her fjernes det sidste index()
                     rawValues = result.split(" ");//nu splittes strengen og gemmes i et array
                     List<EKGDTO> values = new LinkedList<>();
                     for (int i = 0; i < rawValues.length; i++) {
@@ -57,7 +57,6 @@ public class SerialConnector {
                             ekgdto.setTime(new Timestamp(System.currentTimeMillis()));
                             values.add(ekgdto);
                         }
-
                     }
                     return values;
                 }
@@ -68,4 +67,5 @@ public class SerialConnector {
         }
         return null;//returnArray returneres
     }
+
 }

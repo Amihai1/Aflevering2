@@ -15,7 +15,7 @@ public class BPMDAOMySQLImpl implements BPMDAO {
         try {
             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO bpmdata (patientid,bpm,time) VALUES (?,?,?)");
             preparedStatement.setInt(1, bpmDTO.getPatientid());
-            preparedStatement.setInt(2, bpmDTO.getBpm());
+            preparedStatement.setDouble(2, bpmDTO.getBpm());
             preparedStatement.setTimestamp(3, bpmDTO.getTime());
             preparedStatement.execute();
         } catch (SQLException e) {

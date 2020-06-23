@@ -1,9 +1,6 @@
 package Controllers;
 
-import Calculator.EKGGenerator;
-import Calculator.Producer;
-import Calculator.SpO2Calculator;
-import Calculator.TempCalculator;
+import Calculator.*;
 import DAOInterfaces.EKGDAO;
 import DAOInterfaces.SpO2DAO;
 import DAOInterfaces.TempDAO;
@@ -15,6 +12,7 @@ import Listener.BPMListener;
 import Listener.EKGListener;
 import Listener.SpO2Listener;
 import Listener.TempListener;
+import Observable.BPMObservable;
 import Observable.EKGObservable;
 import Observable.SpO2Observable;
 import Observable.TempObservable;
@@ -83,11 +81,12 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
 
     public void ekgbutton(ActionEvent actionEvent) {
 
-        EKGObservable ekg = new Producer();
-        new Thread(ekg).start();
+        EKGObservable ekg = new EKGGenerator();
+        new Thread((Runnable) ekg).start();
         ekg.register(this);
 
     }
+
     public void ekgRecord(ActionEvent actionEvent) {
         this.record = !this.record;
     }
@@ -112,7 +111,7 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     @Override
     public void notify(BPMDTO data) {
         String text = BPMArea.getText();
-        text += "Time: " + data.getTime() + data.getBpm();
+        text = " " + data.getBpm();
         BPMArea.setText(text);
         if (this.record) {
             data.setPatientid(Integer.parseInt(String.valueOf(BPMArea.getText())));
@@ -143,28 +142,41 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
             tempReader.save(temp);
         }
     }
+
     @Override
     public void notify(LinkedList<EKGDTO> data) {
+
+
         Platform.runLater(() -> {
-        List<Double> point = new LinkedList<>();
+            List<Double> point = new LinkedList<>();
 
-        for (EKGDTO ekgdto : data) {
-            point.add(x);
-            point.add((double) ekgdto.getEkg()/3);
-            x++;
+            for (EKGDTO ekgdto : data) {
+                point.add(x);
+                point.add((double)ekgdto.getEkg()/6);
+                x++;
+                ekgdto.setPatientid(Integer.parseInt(patientid.getText()));
 
-            ekgdto.setPatientid(Integer.parseInt(patientid.getText()));
+            }
+            if (x > 800) {
+                x = 0;
+                Linje.getPoints().clear();
+            }
+            Linje.getPoints().addAll(point);
 
-        }
-        if (x>1000){
-            x=0;
-            Linje.getPoints().clear();
-        }
-        Linje.getPoints().addAll(point);
-        if (this.record = !this.record){
+        });
+        new Thread(() -> {
+            if (this.record = !this.record) {
 
-            ekgdao.batchsave(data);
-        }});
+                ekgdao.batchsave(data);
+            }
+        }).start();
+
+    }
+
+    public void bpmbutton(ActionEvent actionEvent) {
+        BPMObservable bpm = new BPMCalculator();
+        new Thread(bpm).start();
+        bpm.register(this);
     }
 }
 

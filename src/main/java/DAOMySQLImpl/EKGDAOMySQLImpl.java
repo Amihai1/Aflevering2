@@ -13,8 +13,8 @@ public class EKGDAOMySQLImpl implements EKGDAO {
 
     @Override
     public void batchsave(List<EKGDTO> batch) {
-        Connection conn = MySQLConnector.getConn();
         try {
+            Connection conn = MySQLConnector.getConn();
             PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO ekgdata1 (patientid,ekg,time) VALUES (?,?,?)");
             for (EKGDTO ekgdto : batch) {
                 preparedStatement.setInt(1, ekgdto.getPatientid());
@@ -24,6 +24,7 @@ public class EKGDAOMySQLImpl implements EKGDAO {
 
             }
             preparedStatement.executeBatch();
+
         } catch (
                 SQLException e) {
             e.printStackTrace();

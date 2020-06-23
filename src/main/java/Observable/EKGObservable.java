@@ -2,6 +2,6 @@ package Observable;
 
 import Listener.EKGListener;
 
-public interface EKGObservable extends Runnable {
+public interface EKGObservable {
     void register(EKGListener listener);
 }
