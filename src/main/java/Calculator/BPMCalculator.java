@@ -11,28 +11,66 @@ import java.util.List;
 
 public class BPMCalculator implements BPMObservable {
 
-
-
+    private BPMListener bpmListener;
 
     @Override
     public void register(BPMListener listener) {
+        this.bpmListener = listener;
     }
+
+    public void BPMCalculator(List<EKGDTO> ekgdtos) {
+
+    }
+
+    Thread bpm = new Thread(new Runnable() {
+        @Override
+        public void run() {
+
+        }
+    });
+
 
     @Override
     public void run() {
-
-       /* while (true) {
-            try {
-                int[] sensorData = new int[400];
-                for (int i = 0; i < 200; i++) {//her hentes 200 returen array og målingerne sorteres i hvert sit array
-                    sensorData[i] = serialConnector.getData();
-                    System.out.println(sensorData.i);
+        while (true) {
+            EKGDTO ekgdto = new EKGDTO();
+            BPMDTO bpmdto = new BPMDTO();
+            int ekgdtos = ekgdto.getEkg();
+            List<Integer> ekg = new LinkedList<>();
+            for (int i = 0; i < ekg.size(); i++) {
+                ekg.add(ekgdtos);
+            }
+            int beat = 0;
+            double min = Double.MAX_VALUE;
+            double max = Double.MIN_VALUE;
+            for (int i = 0; i < ekg.size(); i++) {
+                if (min > ekg.get(i)) {
+                    min = ekg.get(i);
                 }
-
+                if (ekg.get(i) > max) {
+                    max = ekg.get(i);
+                }
+            }
+            double avg = 0.25 * min + 0.75 * max;
+            boolean counted = false;
+            for (int i = 0; i < ekg.size(); i++) {
+                if (ekg.get(i) > avg) {
+                    if (!counted) {
+                        beat++;
+                        counted = true;
+                    } else {
+                        counted = false;
+                    }
+                }
+            }
+            double bpm = beat * 60;
+            bpmdto.setBpm(bpm);
+            System.out.println(bpm);
+            try {
                 Thread.sleep(1000);
-            } catch (Exception e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
     }
 }

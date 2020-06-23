@@ -84,11 +84,17 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
         EKGObservable ekg = new EKGGenerator();
         new Thread((Runnable) ekg).start();
         ekg.register(this);
-
+        this.record = !this.record;
     }
 
     public void ekgRecord(ActionEvent actionEvent) {
-        this.record = !this.record;
+
+    }
+
+    public void bpmbutton(ActionEvent actionEvent) {
+        BPMObservable bpm = new BPMCalculator();
+        new Thread(bpm).start();
+        bpm.register(this);
     }
 
 
@@ -145,16 +151,16 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
 
     @Override
     public void notify(LinkedList<EKGDTO> data) {
-
-
         Platform.runLater(() -> {
             List<Double> point = new LinkedList<>();
-
+            List<Integer> ekgdtos = new LinkedList<>();
             for (EKGDTO ekgdto : data) {
                 point.add(x);
                 point.add((double)ekgdto.getEkg()/6);
+                ekgdtos.add(ekgdto.getEkg());
                 x++;
                 ekgdto.setPatientid(Integer.parseInt(patientid.getText()));
+
 
             }
             if (x > 800) {
@@ -162,7 +168,6 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
                 Linje.getPoints().clear();
             }
             Linje.getPoints().addAll(point);
-
         });
         new Thread(() -> {
             if (this.record = !this.record) {
@@ -173,11 +178,6 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
 
     }
 
-    public void bpmbutton(ActionEvent actionEvent) {
-        BPMObservable bpm = new BPMCalculator();
-        new Thread(bpm).start();
-        bpm.register(this);
-    }
 }
 
 

@@ -47,7 +47,6 @@ public class SerialConnector {
                 result = serialPort.readString();//strengen aflæses og tildeles result
                 String[] rawValues;
                 if (result != null && result.charAt(result.length() - 1) == ' ') {//result kontroleres
-                    //result = result.substring(0, result.length() - 1);//her fjernes det sidste index()
                     rawValues = result.split(" ");//nu splittes strengen og gemmes i et array
                     List<EKGDTO> values = new LinkedList<>();
                     for (int i = 0; i < rawValues.length; i++) {

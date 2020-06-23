@@ -41,8 +41,8 @@ public class TempDAOMySQLImpl implements TempDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 TempDTO tempDTO = new TempDTO();
-                tempDTO.setTemp(resultSet.getDouble("Temp"));
                 tempDTO.setPatientid(resultSet.getInt("patientid"));
+                tempDTO.setTemp(resultSet.getDouble("temp"));
                 tempDTO.setTime(resultSet.getTimestamp("time"));
                 data.add(tempDTO);
             }

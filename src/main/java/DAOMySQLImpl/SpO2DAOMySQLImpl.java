@@ -38,7 +38,9 @@ public class SpO2DAOMySQLImpl implements SpO2DAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 SpO2DTO spo2DTO = new SpO2DTO();
+                spo2DTO.setTime(resultSet.getTimestamp("time"));
                 spo2DTO.setSpo2(resultSet.getDouble("spo2"));
+                spo2DTO.setPatientid(resultSet.getInt("patientid"));
                 data.add(spo2DTO);
             }
 
