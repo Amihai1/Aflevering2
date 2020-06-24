@@ -26,16 +26,19 @@ public class BPMDAOMySQLImpl implements BPMDAO {
 
 
     @Override
-    public List<BPMDTO> loadData(Timestamp time) {
+    public List<BPMDTO> loadData(Timestamp time, int patientid) {
         List<BPMDTO> data = new ArrayList<>();
         Connection connection = MySQLConnector.getConn();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM tempdata WHERE  time > ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM bpmdata WHERE  time > ? AND patientid = ?");
             preparedStatement.setTimestamp(1, time);
+            preparedStatement.setInt(2, patientid);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 BPMDTO bpmDTO = new BPMDTO();
-                bpmDTO.setBpm(resultSet.getInt("bpm"));
+                bpmDTO.setBpm(resultSet.getDouble("bpm"));
+                bpmDTO.setTime(resultSet.getTimestamp("Time"));
+                bpmDTO.setPatientid(resultSet.getInt("Patientid"));
                 data.add(bpmDTO);
             }
 

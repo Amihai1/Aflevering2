@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.shape.Polyline;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,13 +38,15 @@ public class HistorikController {
     public TextField patientid;
 
     public void BPMload(ActionEvent actionEvent) {
+        BPMDTO bpmdto = new BPMDTO();
+        bpmdto.setPatientid(Integer.parseInt(patientid.getText()));
         LocalDateTime localDateTime = datepickerBPM.getValue().atStartOfDay();
         Timestamp time = Timestamp.valueOf(localDateTime);
         BPMDAO bpmdao = new BPMDAOMySQLImpl();
-        List<BPMDTO> bpmdata = bpmdao.loadData(time);
+        List<BPMDTO> bpmdata = bpmdao.loadData(time,bpmdto.getPatientid());
         String textbpm = " ";
         for (BPMDTO data : bpmdata) {
-            textbpm += "Patientid" + data.getPatientid() + "BPM" + data.getBpm() + "Time" + data.getTime() + "\r\n";
+            textbpm += "Patientid: " + data.getPatientid() + ", BPM: " + data.getBpm() + ", Time: " + data.getTime() + "\r\n";
         }
         bpmArea.setText(textbpm);
     }

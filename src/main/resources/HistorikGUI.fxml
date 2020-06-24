@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="850.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HistorikController">
    <children>
@@ -16,7 +16,8 @@
       <DatePicker fx:id="datepickerTemp" layoutX="416.0" layoutY="480.0" prefHeight="25.0" prefWidth="125.0" />
       <DatePicker fx:id="datepickerSpO2" layoutX="739.0" layoutY="480.0" prefHeight="25.0" prefWidth="125.0" />
       <DatePicker layoutX="14.0" layoutY="41.0" />
-      <Button onAction="#EKGload" layoutX="113.0" layoutY="84.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="76.0" text="Load EKG" />
+      <Button layoutX="113.0" layoutY="84.0" mnemonicParsing="false" onAction="#EKGload" prefHeight="46.0" prefWidth="76.0" text="Load EKG" />
       <TextField fx:id="patientid" layoutX="896.0" layoutY="14.0" prefHeight="25.0" prefWidth="41.0" />
+      <Text layoutX="841.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patientid:" />
    </children>
 </AnchorPane>

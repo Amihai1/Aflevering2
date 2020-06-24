@@ -11,5 +11,5 @@ import java.util.List;
 
 
 
-        List<BPMDTO> loadData(Timestamp time);
+        List<BPMDTO> loadData(Timestamp time, int patientid);
     }

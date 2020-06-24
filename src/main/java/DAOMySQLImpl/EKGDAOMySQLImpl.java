@@ -22,7 +22,6 @@ public class EKGDAOMySQLImpl implements EKGDAO {
                 preparedStatement.setInt(2, ekgdto.getEkg());
                 preparedStatement.setTimestamp(3, ekgdto.getTime());
                 preparedStatement.addBatch();
-
             }
             preparedStatement.executeBatch();
 
