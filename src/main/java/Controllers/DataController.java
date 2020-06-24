@@ -81,7 +81,6 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     }
 
     public void ekgbutton(ActionEvent actionEvent) {
-
         EKGObservable ekg = new EKGGenerator();
         new Thread((Runnable) ekg).start();
         ekg.register(this);
