@@ -1,3 +1,4 @@
+/** @author Amihai */
 package Calculator;
 
 import DTO.TempDTO;

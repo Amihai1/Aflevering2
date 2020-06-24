@@ -1,3 +1,4 @@
+/** @author Amihai */
 package DAOMySQLImpl;
 
 import Connectors.MySQLConnector;

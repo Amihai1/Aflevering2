@@ -1,3 +1,4 @@
+/** @author Amihai */
 package Connectors;
 
 import java.sql.Connection;

@@ -11,7 +11,7 @@
       <Button layoutX="34.0" layoutY="108.0" mnemonicParsing="false" onAction="#ekgbutton" prefHeight="53.0" prefWidth="102.0" text="Vis EKG" />
       <Button layoutX="30.0" layoutY="500.0" mnemonicParsing="false" onAction="#tempbutton" prefHeight="50.0" prefWidth="110.0" text="Vis Temperatur" />
       <Button layoutX="30.0" layoutY="590.0" mnemonicParsing="false" onAction="#spo2button" prefHeight="50.0" prefWidth="110.0" text="SpO2" />
-      <Polyline fx:id="Linje" layoutX="200.0" layoutY="50" scaleY="-1.0" />
+      <Polyline fx:id="Linje" layoutX="200.0" layoutY="100" scaleY="-1.0" />
       <Button layoutX="30.0" layoutY="413.0" mnemonicParsing="false" onAction="#bpmbutton" prefHeight="50.0" prefWidth="110.0" text="Vis BPM" />
       <TextArea fx:id="BPMArea" layoutX="163.0" layoutY="413.0" prefHeight="50.0" prefWidth="156.0" />
       <TextArea fx:id="temparea" layoutX="163.0" layoutY="500.0" prefHeight="50.0" prefWidth="156.0" wrapText="true">

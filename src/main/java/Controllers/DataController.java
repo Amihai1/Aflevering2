@@ -1,3 +1,4 @@
+/** @author Amihai */
 package Controllers;
 
 import Calculator.*;
@@ -93,7 +94,7 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
 
     public void bpmbutton(ActionEvent actionEvent) {
         BPMObservable bpm = new BPMCalculator();
-        new Thread(bpm).start();
+        new Thread((Runnable) bpm).start();
         bpm.register(this);
     }
 
@@ -144,7 +145,6 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
         temparea.setText(text);
         if (this.record) {
             temp.setPatientid(Integer.parseInt(patientid.getText()));
-            System.out.println(temp.getPatientid());
             tempReader.save(temp);
         }
     }

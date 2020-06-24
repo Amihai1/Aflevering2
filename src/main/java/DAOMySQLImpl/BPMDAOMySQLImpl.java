@@ -1,3 +1,4 @@
+/** @author Amihai */
 package DAOMySQLImpl;
 
 import DAOInterfaces.BPMDAO;
@@ -22,10 +23,7 @@ public class BPMDAOMySQLImpl implements BPMDAO {
             e.printStackTrace();
         }
     }
-        @Override
-    public void batchsave(List<BPMDTO> batch) {
 
-    }
 
     @Override
     public List<BPMDTO> loadData(Timestamp time) {

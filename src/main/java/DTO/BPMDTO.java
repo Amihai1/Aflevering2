@@ -1,3 +1,4 @@
+/** @author Amihai */
 package DTO;
 
 import java.sql.Timestamp;

@@ -1,3 +1,4 @@
+/** @author Amihai */
 package DAOMySQLImpl;
 
 import DAOInterfaces.EKGDAO;
@@ -33,12 +34,13 @@ public class EKGDAOMySQLImpl implements EKGDAO {
     }
 
     @Override
-    public List<EKGDTO> loadData(Timestamp time) {
+    public List<EKGDTO> loadData(Timestamp time, int patientid) {
         List<EKGDTO> data = new ArrayList<>();
         Connection connection = MySQLConnector.getConn();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM ekgdata WHERE  time > ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT *FROM ekgdata1 WHERE  time > ? AND patientid = ?");
             preparedStatement.setTimestamp(1, time);
+            preparedStatement.setInt(2, patientid);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 EKGDTO ekgDTO = new EKGDTO();

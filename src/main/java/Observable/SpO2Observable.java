@@ -1,3 +1,5 @@
+/** @author Amihai */
+
 package Observable;
 
 import Listener.SpO2Listener;

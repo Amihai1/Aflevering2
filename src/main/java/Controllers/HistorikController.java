@@ -1,5 +1,4 @@
-
-
+/** @author Sanne */
 
 package Controllers;
 
@@ -23,6 +22,7 @@ import javafx.scene.shape.Polyline;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 public class HistorikController {
@@ -80,15 +80,20 @@ public class HistorikController {
         this.patientid.setText(String.valueOf(id));
     }
 
-    /*public void EKGload(ActionEvent actionEvent) {
+    public void EKGload(ActionEvent actionEvent) {
+        EKGDTO ekgdto = new EKGDTO();
+        double x = 0.0;
+        ekgdto.setPatientid(Integer.parseInt(patientid.getText()));
             LocalDateTime localDateTime = datepickerEKG.getValue().atStartOfDay();
             Timestamp time = Timestamp.valueOf(localDateTime);
             EKGDAO ekgdao = new EKGDAOMySQLImpl();
-            List<EKGDTO> ekgdata = ekgdao.loadData(time);
-            String textekg = " ";
+            List<EKGDTO> ekgdata = ekgdao.loadData(time,ekgdto.getPatientid());
+            List<Double> point =  new LinkedList<>();
             for (EKGDTO data : ekgdata) {
-                textekg += data.getEkg();
+                point.add(x);
+                point.add((double) data.getEkg());
+                x++;
             }
-            ekgPane.getPoints(ekgdata);
-        }*/
+            ekgPane.getPoints().addAll(point);
+        }
 }

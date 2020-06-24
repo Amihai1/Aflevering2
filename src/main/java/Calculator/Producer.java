@@ -1,7 +1,10 @@
+/** @author Amihai */
 package Calculator;
 
 import Connectors.SerialConnector;
+import DTO.BPMDTO;
 import DTO.EKGDTO;
+import Listener.BPMListener;
 import Listener.EKGListener;
 import Observable.EKGObservable;
 
@@ -10,7 +13,7 @@ import java.util.List;
 
 public class Producer implements EKGObservable {
     LinkedList<EKGDTO> list = new LinkedList<>();
-    LinkedList<EKGDTO> listDatabase = new LinkedList<>();
+    LinkedList<BPMDTO> listDatabase = new LinkedList<>();
     int capacity = 200;
     SerialConnector serialConnector = new SerialConnector(0);
     private EKGListener listener;
@@ -27,7 +30,7 @@ public class Producer implements EKGObservable {
                 if(value!=null){
                     for(EKGDTO i: value){
                         list.add(i);
-                        //listDatabase.add(i);
+                       // listDatabase.add(i);
                         //System.out.println(i.getEkg());
                     }
                 }
@@ -62,6 +65,7 @@ public class Producer implements EKGObservable {
     @Override
     public void register(EKGListener listener) {
         this.listener = listener;
+
     }
 
 

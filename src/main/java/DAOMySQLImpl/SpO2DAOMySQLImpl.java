@@ -1,3 +1,4 @@
+/** @author Amihai */
 package DAOMySQLImpl;
 
 import DAOInterfaces.SpO2DAO;
@@ -22,10 +23,7 @@ public class SpO2DAOMySQLImpl implements SpO2DAO {
             e.printStackTrace();
         }
     }
-        @Override
-    public void batchsave(List<SpO2DTO> batch) {
 
-    }
 
     @Override
     public List<SpO2DTO> loadData(Timestamp time,int patientid) {

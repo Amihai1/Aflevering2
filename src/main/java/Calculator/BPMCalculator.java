@@ -1,3 +1,4 @@
+/** @author Amihai */
 package Calculator;
 
 import Connectors.SerialConnector;
@@ -9,8 +10,7 @@ import Observable.BPMObservable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BPMCalculator implements BPMObservable {
-
+public class BPMCalculator implements BPMObservable{
     private BPMListener bpmListener;
 
     @Override
@@ -18,27 +18,15 @@ public class BPMCalculator implements BPMObservable {
         this.bpmListener = listener;
     }
 
-    public void BPMCalculator(List<EKGDTO> ekgdtos) {
-
-    }
-
-    Thread bpm = new Thread(new Runnable() {
-        @Override
-        public void run() {
-
-        }
-    });
-
-
     @Override
     public void run() {
         while (true) {
             EKGDTO ekgdto = new EKGDTO();
             BPMDTO bpmdto = new BPMDTO();
-            int ekgdtos = ekgdto.getEkg();
-            List<Integer> ekg = new LinkedList<>();
-            for (int i = 0; i < ekg.size(); i++) {
-                ekg.add(ekgdtos);
+            List<EKGDTO> ekgdtos = new LinkedList<>();
+            List<Integer> ekg = new LinkedList<>() ;
+            for (EKGDTO i:ekgdtos){
+                ekg.add(i.getEkg());
             }
             int beat = 0;
             double min = Double.MAX_VALUE;
@@ -66,6 +54,9 @@ public class BPMCalculator implements BPMObservable {
             double bpm = beat * 60;
             bpmdto.setBpm(bpm);
             System.out.println(bpm);
+            if(bpmListener !=null){
+                bpmListener.notify(bpmdto);
+            }
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {

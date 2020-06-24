@@ -1,6 +1,6 @@
+/** @author Amihai */
 package Main;
 
-import Calculator.EKGGenerator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

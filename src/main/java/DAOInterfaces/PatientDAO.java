@@ -1,3 +1,4 @@
+/** @author Amihai */
 package DAOInterfaces;
 
 import DTO.PatientDTO;

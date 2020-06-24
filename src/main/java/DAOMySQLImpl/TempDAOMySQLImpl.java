@@ -1,3 +1,4 @@
+/** @author Amihai */
 package DAOMySQLImpl;
 
 import DAOInterfaces.TempDAO;
@@ -25,10 +26,7 @@ public class TempDAOMySQLImpl implements TempDAO {
         }
     }
 
-    @Override
-    public void batchsave(List<TempDTO> batch) {
 
-    }
 
     @Override
     public List<TempDTO> loadData(Timestamp time, int patientid) {
