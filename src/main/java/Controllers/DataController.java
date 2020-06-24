@@ -1,19 +1,19 @@
-/** @author Amihai */
+/**@author Amihai*/
 package Controllers;
 
 import Calculator.*;
+import DAOInterfaces.BPMDAO;
 import DAOInterfaces.EKGDAO;
 import DAOInterfaces.SpO2DAO;
 import DAOInterfaces.TempDAO;
+import DAOMySQLImpl.BPMDAOMySQLImpl;
 import DAOMySQLImpl.EKGDAOMySQLImpl;
 import DAOMySQLImpl.SpO2DAOMySQLImpl;
 import DAOMySQLImpl.TempDAOMySQLImpl;
 import DTO.*;
-import Listener.BPMListener;
 import Listener.EKGListener;
 import Listener.SpO2Listener;
 import Listener.TempListener;
-import Observable.BPMObservable;
 import Observable.EKGObservable;
 import Observable.SpO2Observable;
 import Observable.TempObservable;
@@ -23,20 +23,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Collections;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class DataController implements BPMListener, EKGListener, SpO2Listener, TempListener {
+public class DataController implements EKGListener, SpO2Listener, TempListener {
     public TextArea BPMArea;
     public TextArea temparea;
     public TextArea spo2area;
@@ -46,8 +45,10 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     private double x = 0.0;
     private SpO2DAO spo2Reader = new SpO2DAOMySQLImpl();
     private TempDAO tempReader = new TempDAOMySQLImpl();
+    private BPMDAO bpmdao = new BPMDAOMySQLImpl();
     private EKGDAO ekgdao = new EKGDAOMySQLImpl();
-    private EKGDTO ekgdto;
+    private Instant start = Instant.now();
+
 
     public void setpatientid(int id) {
         this.patientid.setText(String.valueOf(id));
@@ -92,9 +93,7 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
     }
 
     public void bpmbutton(ActionEvent actionEvent) {
-        BPMObservable bpm = new BPMCalculator();
-        new Thread((Runnable) bpm).start();
-        bpm.register(this);
+
     }
 
 
@@ -110,18 +109,6 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
             hcontroller.setpatientid(Integer.parseInt(patientDTO));
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-
-    @Override
-    public void notify(BPMDTO data) {
-        String text = BPMArea.getText();
-        text = " " + data.getBpm();
-        BPMArea.setText(text);
-        if (this.record) {
-            data.setPatientid(Integer.parseInt(String.valueOf(BPMArea.getText())));
-
         }
     }
 
@@ -150,24 +137,28 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
 
     @Override
     public void notify(LinkedList<EKGDTO> data) {
+
+        List<Double> point = new LinkedList<>();
+        for (int i = 0; i < data.size(); i++) {
+            EKGDTO ekgdto = data.get(i);
+            point.add(x);
+            point.add((double) ekgdto.getEkg() / 6);
+            x++;
+            ekgdto.setPatientid(Integer.parseInt(patientid.getText()));
+
+
+        }
+        if (x > 800) {
+            new Thread(() -> {
+                BPMCalculator(data);
+            }).start();
+            x = 0;
+            Linje.getPoints().clear();
+        }
         Platform.runLater(() -> {
-            List<Double> point = new LinkedList<>();
-            List<Integer> ekgdtos = new LinkedList<>();
-            for (EKGDTO ekgdto : data) {
-                point.add(x);
-                point.add((double)ekgdto.getEkg()/6);
-                ekgdtos.add(ekgdto.getEkg());
-                x++;
-                ekgdto.setPatientid(Integer.parseInt(patientid.getText()));
-
-
-            }
-            if (x > 800) {
-                x = 0;
-                Linje.getPoints().clear();
-            }
             Linje.getPoints().addAll(point);
         });
+
         new Thread(() -> {
             if (this.record = !this.record) {
 
@@ -176,7 +167,47 @@ public class DataController implements BPMListener, EKGListener, SpO2Listener, T
         }).start();
 
     }
+//i samarbejde med Osama er BPMCalculator lavet
+    private void BPMCalculator(LinkedList<EKGDTO> ekgdtos) {
+        double avg;
+        double min = Double.MAX_VALUE;
+        double max = Double.MIN_VALUE;
+        for (int i = 0; i < ekgdtos.size(); i++) {
+            if (ekgdtos.get(i).getEkg() < min) {
+                min = ekgdtos.get(i).getEkg();
+            }
+            if (ekgdtos.get(i).getEkg() > max) {
+                max = ekgdtos.get(i).getEkg();
+            }
+        }
+        avg = 0.3 * min + 0.7 * max;
+        boolean counted = true;
+        for (int i = 0; i < ekgdtos.size(); i++) {
+            if (ekgdtos.get(i).getEkg() > avg) {
+                if (!counted) {
+                    Timestamp tid = ekgdtos.get(i).getTime();
+                    long diff = Duration.between(start, tid.toInstant()).toMillis();
+                    start = tid.toInstant();
+                    counted = true;
+                    double bpm = Math.round((60000.0 / diff) * 2);
 
+                    BPMDTO bpmdto = new BPMDTO();
+                    bpmdto.setPatientid(Integer.parseInt(patientid.getText()));
+                    bpmdto.setBpm(bpm);
+                    bpmdto.setTime(new Timestamp(System.currentTimeMillis()));
+                    if (bpm > 20 && bpm < 150) {
+                        Platform.runLater(() -> {
+                            BPMArea.setText(String.valueOf(bpmdto.getBpm()));
+                        });
+                        bpmdao.save(bpmdto);
+                    }
+
+                } else {
+                    counted = false;
+                }
+            }
+        }
+    }
 }
 
 

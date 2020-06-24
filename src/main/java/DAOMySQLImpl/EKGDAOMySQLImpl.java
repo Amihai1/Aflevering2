@@ -16,7 +16,7 @@ public class EKGDAOMySQLImpl implements EKGDAO {
     public void batchsave(List<EKGDTO> batch) {
         try {
             Connection conn = MySQLConnector.getConn();
-            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO ekgdata1 (patientid,ekg,time) VALUES (?,?,?)");
+            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO ekgdata (patientid,ekg,time) VALUES (?,?,?)");
             for (EKGDTO ekgdto : batch) {
                 preparedStatement.setInt(1, ekgdto.getPatientid());
                 preparedStatement.setInt(2, ekgdto.getEkg());

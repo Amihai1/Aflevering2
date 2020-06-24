@@ -4,7 +4,6 @@ package Calculator;
 import Connectors.SerialConnector;
 import DTO.BPMDTO;
 import DTO.EKGDTO;
-import Listener.BPMListener;
 import Listener.EKGListener;
 import Observable.EKGObservable;
 
